@@ -7,16 +7,14 @@
     html, body {
       margin: 0;
       padding: 0;
-      font-family: Arial;
+      overflow-y: auto;
+      font-family: Arial, sans-serif;
       background: #111;
       color: white;
-      min-height: 100%;
-      overflow-y: auto;
     }
 
     body {
       text-align: center;
-      padding-bottom: 50px;
     }
 
     .container {
@@ -28,7 +26,7 @@
     .card {
       background: #222;
       padding: 15px;
-      margin: 10px;
+      margin: 10px 0;
       border-radius: 10px;
       cursor: pointer;
     }
@@ -48,17 +46,23 @@
     }
 
     .contentPage {
-      padding: 20px;
       text-align: left;
-      white-space: pre-line;
-      word-wrap: break-word;
+      padding: 10px;
+    }
+
+    .textBox {
+      max-height: none;
+      overflow: visible;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.5;
     }
 
     .updateBox {
       background: #2a2a2a;
       border-left: 5px solid #4CAF50;
-      padding: 15px;
-      margin-bottom: 20px;
+      padding: 10px;
+      margin-bottom: 15px;
       border-radius: 8px;
     }
 
@@ -88,94 +92,20 @@ const data = {
 
     "Marvel": {
       "Agents of Shield": {
-        content: `this is my new page about agents of shield i will update as i get time
-agents of s.h.i.e.l.d. is a marvel television show and the s1 e1 was right after loki 
-invaded manhattan some main characters on the replacement shield team was grant ward
-revealed as hydra. jenna simmons leo fitz miranda may and phil coulson
-and temporarily johnathan garett revealed as the clairvoyant.`
+        content: `This is my page about Agents of Shield. I will update it over time.
+
+Agents of S.H.I.E.L.D. is a Marvel television show. Season 1 Episode 1 takes place right after Loki invaded Manhattan.
+
+Main characters on the replacement S.H.I.E.L.D. team:
+Grant Ward (later revealed as Hydra)
+Jemma Simmons
+Leo Fitz
+Melinda May
+Phil Coulson
+
+John Garrett is also involved and is later revealed as the Clairvoyant.`
       }
     },
 
     "DC": {
-      "Flash": {
-        "2014 Edition": {
-          content: `So… your friend who watched the 2014 Flash series might keep saying “my name is Barry Allen” in an RP. Who is he?
-
-Barry Allen (The Flash) is a speedster who saves people and stops villains.
-
-He got his powers years after the death of his mom because of Eobard Thawne (formerly disguised as Dr. Wells). It is later revealed Thawne killed his mother out of rage after failing to kill Barry.
-
-Anyway, the particle accelerator exploded and created metahumans—and the Flash.
-
-Don’t watch past Season 4—it gets bad. By Season 7 it’s just stupid. The ending is… eh.`
-        }
-      }
-    }
-
-  }
-};
-
-let current = data;
-let stack = [];
-
-function render() {
-  const container = document.getElementById("content");
-  container.innerHTML = "";
-
-  if (current.content) {
-    container.innerHTML = `
-      <div class="contentPage">
-        <div class="updateBox">
-          <strong>🔔 Author's Latest Update</strong>
-          <p>${latestUpdate}</p>
-        </div>
-
-        <h2>Info</h2>
-        <p>${current.content}</p>
-      </div>
-    `;
-    updatePath();
-    return;
-  }
-
-  Object.keys(current).forEach(key => {
-    let div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <div class="title">${key}</div>
-      <div class="subtitle">Click to open</div>
-    `;
-
-    div.onclick = () => {
-      stack.push(current);
-      current = current[key];
-      render();
-    };
-
-    container.appendChild(div);
-  });
-
-  updatePath();
-}
-
-function updatePath() {
-  const pathDiv = document.getElementById("path");
-
-  if (stack.length > 0) {
-    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
-  } else {
-    pathDiv.innerHTML = "";
-  }
-}
-
-function goBack() {
-  current = stack.pop();
-  render();
-}
-
-render();
-</script>
-
-</body>
-</html>
+      "Flash
