@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Wiki</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .card {
+      background: #222;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      background: #333;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .contentPage {
+      padding: 20px;
+      text-align: left;
+    }
+
+    button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>My Wiki</h1>
+
+<div id="path"></div>
+<div class="container" id="content"></div>
+
+<script>
+const data = {
+  "TV Shows": {
+    "Marvel": {
+      "Agents of Shield": {
+        content: "This is my page about Agents of Shield."
+      }
+    }
+  }
+};
+
+let current = data;
+let stack = [];
+
+function render() {
+  const container = document.getElementById("content");
+  container.innerHTML = "";
+
+  if (current.content) {
+    container.innerHTML = `
+      <div class="contentPage">
+        <h2>Info</h2>
+        <p>${current.content}</p>
+      </div>
+    `;
+    updatePath();
+    return;
+  }
+
+  Object.keys(current).forEach(key => {
+    let div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="title">${key}</div>
+      <div class="subtitle">Click to open</div>
+    `;
+
+    div.onclick = () => {
+      stack.push(current);
+      current = current[key];
+      render();
+    };
+
+    container.appendChild(div);
+  });
+
+  updatePath();
+}
+
+function updatePath() {
+  const pathDiv = document.getElementById("path");
+
+  if (stack.length > 0) {
+    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
+  } else {
+    pathDiv.innerHTML = "";
+  }
+}
+
+function goBack() {
+  current = stack.pop();
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
