@@ -44,6 +44,14 @@
       white-space: pre-line;
     }
 
+    .updateBox {
+      background: #2a2a2a;
+      border-left: 5px solid #4CAF50;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
     button {
       padding: 10px;
       margin: 10px;
@@ -62,8 +70,14 @@
 <div class="container" id="content"></div>
 
 <script>
+
+// 🔔 GLOBAL UPDATE MESSAGE (edit this anytime)
+const latestUpdate = `Author's Update:
+This site is still being built. More pages, better info, and improvements are coming soon.`;
+
 const data = {
   "TV Shows": {
+
     "Marvel": {
       "Agents of Shield": {
         content: `this is my new page about agents of shield i will update as i get time
@@ -72,7 +86,24 @@ invaded manhattan some main characters on the replacement shield team was grant 
 revealed as hydra. jenna simmons leo fitz miranda may and phil coulson
 and temporarily johnathan garett revealed as the clairvoyant.`
       }
+    },
+
+    "DC": {
+      "Flash": {
+        "2014 Edition": {
+          content: `So… your friend who watched the 2014 Flash series might keep saying “my name is Barry Allen” in an RP. Who is he?
+
+Barry Allen (The Flash) is a speedster who saves people and stops villains.
+
+He got his powers years after the death of his mom because of Eobard Thawne (formerly disguised as Dr. Wells). It is later revealed Thawne killed his mother out of rage after failing to kill Barry.
+
+Anyway, the particle accelerator exploded and created metahumans—and the Flash.
+
+Don’t watch past Season 4—it gets bad. By Season 7 it’s just stupid. The ending is… eh.`
+        }
+      }
     }
+
   }
 };
 
@@ -86,6 +117,12 @@ function render() {
   if (current.content) {
     container.innerHTML = `
       <div class="contentPage">
+
+        <div class="updateBox">
+          <strong>🔔 Author's Latest Update</strong>
+          <p>${latestUpdate}</p>
+        </div>
+
         <h2>Info</h2>
         <p>${current.content}</p>
       </div>
