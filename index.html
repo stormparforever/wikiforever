@@ -4,16 +4,25 @@
   <title>My Wiki</title>
 
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       font-family: Arial;
       background: #111;
       color: white;
+      min-height: 100%;
+      overflow-y: auto;
+    }
+
+    body {
       text-align: center;
+      padding-bottom: 50px;
     }
 
     .container {
       max-width: 700px;
       margin: auto;
+      padding: 10px;
     }
 
     .card {
@@ -42,6 +51,7 @@
       padding: 20px;
       text-align: left;
       white-space: pre-line;
+      word-wrap: break-word;
     }
 
     .updateBox {
@@ -70,8 +80,6 @@
 <div class="container" id="content"></div>
 
 <script>
-
-// 🔔 GLOBAL UPDATE MESSAGE (edit this anytime)
 const latestUpdate = `Author's Update:
 This site is still being built. More pages, better info, and improvements are coming soon.`;
 
@@ -117,7 +125,6 @@ function render() {
   if (current.content) {
     container.innerHTML = `
       <div class="contentPage">
-
         <div class="updateBox">
           <strong>🔔 Author's Latest Update</strong>
           <p>${latestUpdate}</p>
