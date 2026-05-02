@@ -10,7 +10,6 @@
       color: white;
       text-align: center;
       margin: 0;
-      padding: 0;
     }
 
     h1 {
@@ -61,17 +60,103 @@
 <div class="container" id="content"></div>
 
 <script>
+
 const data = {
   "TV Shows": {
     "Marvel": {
       "Agents of Shield": {
-        content: "This is my page about Agents of Shield.\n\nAgents of S.H.I.E.L.D. is a Marvel show set after Loki invaded Manhattan.\n\nCharacters:\nGrant Ward (Hydra)\nJemma Simmons\nLeo Fitz\nMelinda May\nPhil Coulson\n\nJohn Garrett is revealed as the Clairvoyant."
+
+        "Characters": {
+
+          "Phil Coulson": {
+            content: `Phil Coulson appeared in The Avengers and was killed by Loki using his scepter.
+
+In Agents of S.H.I.E.L.D., it is revealed he did not just briefly die — he was dead for days.
+
+He was brought back to life in the Guest House using the GH.325 formula, which is based on alien blood.
+
+His memories were altered to hide the truth until he later discovers what really happened, including the "Tahiti" project.`
+          },
+
+          "Daisy Johnson / Skye": {
+            content: `Daisy Johnson, originally known as Skye, was a member of the Rising Tide.
+
+She tried to expose people like Mike Peterson (later known as Deathlok).
+
+She was captured by Ian Quinn (the gravitonium guy), who experimented on her and nearly killed her.
+
+She survived after receiving the GH.325 formula, the same one used on Coulson.
+
+Raina, also known as "the girl with the flower dress," is a separate character who later becomes Inhuman.
+
+In Season 2, Daisy becomes Quake after Terrigenesis triggered by the Obelisk.
+
+Her transformation was intense and not exactly smooth.`
+          },
+
+          "Grant Ward": {
+            content: `Grant Ward starts as a skilled S.H.I.E.L.D. agent and part of Coulson’s team.
+
+He is later revealed to actually be Hydra, which completely changes his role.
+
+Ward was trained and manipulated by John Garrett.
+
+Even after being exposed, he continues as a major villain with multiple phases, including connections to Hive.
+
+He’s one of the biggest betrayals in the show.`
+          },
+
+          "Leo Fitz": {
+            content: `Leo Fitz is the engineering and tech specialist of the team.
+
+He works closely with Simmons, and they are basically a duo.
+
+After brain damage from early events, Fitz struggles but still remains one of the smartest members.
+
+Over time, he becomes more serious and hardened.
+
+He is responsible for a lot of the tech that keeps the team going.`
+          },
+
+          "Jemma Simmons": {
+            content: `Jemma Simmons is the science and medical expert of the team.
+
+She works closely with Fitz, and they have one of the strongest relationships.
+
+Simmons goes through a lot, including being stranded on an alien planet.
+
+She is very smart, determined, and often handles biological or alien-related problems.
+
+She becomes one of the most developed characters over time.`
+          },
+
+          "Melinda May": {
+            content: `Melinda May is a highly skilled S.H.I.E.L.D. agent and one of the best fighters.
+
+She is known as "The Cavalry" because of a past mission.
+
+May is quiet and serious, but extremely reliable.
+
+She has a close working relationship with Coulson and is one of the most trusted members.
+
+She handles most combat missions and is basically the team’s top fighter.`
+          }
+
+        }
+
       }
     },
+
     "DC": {
       "Flash": {
         "2014 Edition": {
-          content: "So your friend who watched the 2014 Flash keeps saying \"my name is Barry Allen\".\n\nBarry Allen is a speedster who saves people.\n\nHe got powers after the particle accelerator explosion caused by Eobard Thawne.\n\nDon't watch past Season 4. It gets bad. By Season 7 it's stupid. The ending is... eh."
+          content: `So your friend who watched the 2014 Flash series might keep saying "my name is Barry Allen".
+
+Barry Allen is a speedster who saves people and stops villains.
+
+He got his powers after the particle accelerator explosion caused by Eobard Thawne.
+
+Don't watch past Season 4. It gets bad. By Season 7 it's stupid. The ending is... eh.`
         }
       }
     }
@@ -86,12 +171,8 @@ function render() {
   container.innerHTML = "";
 
   if (current.content) {
-    container.innerHTML = `
-      <div class="contentPage" id="textBox"></div>
-    `;
-
+    container.innerHTML = `<div class="contentPage" id="textBox"></div>`;
     document.getElementById("textBox").innerText = current.content;
-
     updatePath();
     return;
   }
@@ -129,6 +210,7 @@ function goBack() {
 }
 
 render();
+
 </script>
 
 </body>
