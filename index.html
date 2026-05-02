@@ -4,21 +4,12 @@
   <title>Wiki Forever</title>
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
+    body {
       font-family: Arial, sans-serif;
       background: #111;
       color: white;
-      height: 100%;
-    }
-
-    body {
       text-align: center;
-    }
-
-    h1 {
-      margin-top: 20px;
+      margin: 0;
     }
 
     .container {
@@ -44,19 +35,13 @@
       font-weight: bold;
     }
 
-    .subtitle {
-      font-size: 12px;
-      color: #aaa;
-    }
-
     .contentPage {
       text-align: left;
       padding: 10px;
     }
 
-    /* 🔥 THE IMPORTANT PART */
     .scrollBox {
-      max-height: 300px; /* you can change this later */
+      max-height: 300px;
       overflow-y: auto;
       background: #1a1a1a;
       padding: 10px;
@@ -92,45 +77,24 @@
 <div class="container" id="content"></div>
 
 <script>
-const latestUpdate = `Author's Update:
-This site is still being built. More pages, better info, and improvements are coming soon.`;
+
+// 🔔 update text (safe)
+const latestUpdate = "This site is still being built. More pages coming soon.";
 
 const data = {
   "TV Shows": {
-
     "Marvel": {
       "Agents of Shield": {
-        content: `This is my page about Agents of Shield. I will update it over time.
-
-Agents of S.H.I.E.L.D. is a Marvel television show. Season 1 Episode 1 takes place right after Loki invaded Manhattan.
-
-Main characters on the replacement S.H.I.E.L.D. team:
-Grant Ward (later revealed as Hydra)
-Jemma Simmons
-Leo Fitz
-Melinda May
-Phil Coulson
-
-John Garrett is also involved and is later revealed as the Clairvoyant.`
+        content: "This is my page about Agents of Shield.\n\nAgents of S.H.I.E.L.D. is a Marvel show set after Loki invaded Manhattan.\n\nCharacters:\nGrant Ward (Hydra)\nJemma Simmons\nLeo Fitz\nMelinda May\nPhil Coulson\n\nJohn Garrett is revealed as the Clairvoyant."
       }
     },
-
     "DC": {
       "Flash": {
         "2014 Edition": {
-          content: `So... your friend who watched the 2014 Flash series might keep saying "my name is Barry Allen" in an RP. Who is he?
-
-Barry Allen (The Flash) is a speedster who saves people and stops villains.
-
-He got his powers years after the death of his mom because of Eobard Thawne (formerly disguised as Dr. Wells). It is later revealed Thawne killed his mother out of rage after failing to kill Barry.
-
-Anyway, the particle accelerator exploded and created metahumans—and the Flash.
-
-Don't watch past Season 4—it gets bad. By Season 7 it's just stupid. The ending is... eh.`
+          content: "So your friend who watched the 2014 Flash keeps saying \"my name is Barry Allen\".\n\nBarry Allen is a speedster who saves people.\n\nHe got powers after the particle accelerator explosion caused by Eobard Thawne.\n\nDon't watch past Season 4. It gets bad. By Season 7 it's stupid. The ending is... eh."
         }
       }
     }
-
   }
 };
 
@@ -141,47 +105,50 @@ function render() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-  if (current.content) {
-    container.innerHTML = `
-      <div class="contentPage">
+  try {
 
-        <div class="updateBox">
-          <strong>🔔 Author's Latest Update</strong>
-          <p>${latestUpdate}</p>
+    if (current.content) {
+      container.innerHTML = `
+        <div class="contentPage">
+
+          <div class="updateBox">
+            <strong>🔔 Author Update</strong>
+            <p>${latestUpdate}</p>
+          </div>
+
+          <h2>Info</h2>
+          <div class="scrollBox" id="textBox"></div>
+
         </div>
+      `;
 
-        <h2>Info</h2>
+      // SAFE TEXT RENDER (prevents crashes)
+      document.getElementById("textBox").innerText = current.content;
 
-        <div class="scrollBox" id="scrollBox"></div>
+      updatePath();
+      return;
+    }
 
-      </div>
-    `;
+    Object.keys(current).forEach(key => {
+      let div = document.createElement("div");
+      div.className = "card";
+      div.innerText = key;
 
-    document.getElementById("scrollBox").innerText = current.content;
+      div.onclick = () => {
+        stack.push(current);
+        current = current[key];
+        render();
+      };
+
+      container.appendChild(div);
+    });
 
     updatePath();
-    return;
+
+  } catch (e) {
+    container.innerHTML = "<p>Something broke. Check your text formatting.</p>";
+    console.error(e);
   }
-
-  Object.keys(current).forEach(key => {
-    let div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <div class="title">${key}</div>
-      <div class="subtitle">Click to open</div>
-    `;
-
-    div.onclick = () => {
-      stack.push(current);
-      current = current[key];
-      render();
-    };
-
-    container.appendChild(div);
-  });
-
-  updatePath();
 }
 
 function updatePath() {
@@ -192,3 +159,16 @@ function updatePath() {
   } else {
     pathDiv.innerHTML = "";
   }
+}
+
+function goBack() {
+  current = stack.pop();
+  render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
