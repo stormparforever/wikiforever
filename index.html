@@ -108,4 +108,93 @@ John Garrett is also involved and is later revealed as the Clairvoyant.`
     },
 
     "DC": {
-      "Flash
+      "Flash": {
+        "2014 Edition": {
+          content: `So... your friend who watched the 2014 Flash series might keep saying "my name is Barry Allen" in an RP. Who is he?
+
+Barry Allen (The Flash) is a speedster who saves people and stops villains.
+
+He got his powers years after the death of his mom because of Eobard Thawne (formerly disguised as Dr. Wells). It is later revealed Thawne killed his mother out of rage after failing to kill Barry.
+
+Anyway, the particle accelerator exploded and created metahumans—and the Flash.
+
+Don't watch past Season 4—it gets bad. By Season 7 it's just stupid. The ending is... eh.`
+        }
+      }
+    }
+
+  }
+};
+
+let current = data;
+let stack = [];
+
+function render() {
+  const container = document.getElementById("content");
+  container.innerHTML = "";
+
+  if (current.content) {
+    container.innerHTML = `
+      <div class="contentPage">
+
+        <div class="updateBox">
+          <strong>🔔 Author's Latest Update</strong>
+          <p>${latestUpdate}</p>
+        </div>
+
+        <h2>Info</h2>
+        <div class="textBox" id="textBox"></div>
+
+      </div>
+    `;
+
+    // FORCE full text render (fixes cut-off bug)
+    document.getElementById("textBox").innerText = current.content;
+
+    updatePath();
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  Object.keys(current).forEach(key => {
+    let div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <div class="title">${key}</div>
+      <div class="subtitle">Click to open</div>
+    `;
+
+    div.onclick = () => {
+      stack.push(current);
+      current = current[key];
+      render();
+    };
+
+    container.appendChild(div);
+  });
+
+  updatePath();
+  window.scrollTo(0, 0);
+}
+
+function updatePath() {
+  const pathDiv = document.getElementById("path");
+
+  if (stack.length > 0) {
+    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
+  } else {
+    pathDiv.innerHTML = "";
+  }
+}
+
+function goBack() {
+  current = stack.pop();
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
