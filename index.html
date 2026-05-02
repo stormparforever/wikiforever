@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Wiki</title>
+  <title>Wiki Forever</title>
 
   <style>
     html, body {
@@ -15,6 +15,10 @@
 
     body {
       text-align: center;
+    }
+
+    h1 {
+      margin-top: 20px;
     }
 
     .container {
@@ -51,8 +55,6 @@
     }
 
     .textBox {
-      max-height: none;
-      overflow: visible;
       white-space: pre-wrap;
       word-break: break-word;
       line-height: 1.5;
@@ -78,7 +80,7 @@
 
 <body>
 
-<h1>wiki forever</h1>
+<h1>Wiki Forever</h1>
 
 <div id="path"></div>
 <div class="container" id="content"></div>
@@ -148,7 +150,6 @@ function render() {
       </div>
     `;
 
-    // FORCE full text render (fixes cut-off bug)
     document.getElementById("textBox").innerText = current.content;
 
     updatePath();
@@ -164,37 +165,3 @@ function render() {
       <div class="title">${key}</div>
       <div class="subtitle">Click to open</div>
     `;
-
-    div.onclick = () => {
-      stack.push(current);
-      current = current[key];
-      render();
-    };
-
-    container.appendChild(div);
-  });
-
-  updatePath();
-  window.scrollTo(0, 0);
-}
-
-function updatePath() {
-  const pathDiv = document.getElementById("path");
-
-  if (stack.length > 0) {
-    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
-  } else {
-    pathDiv.innerHTML = "";
-  }
-}
-
-function goBack() {
-  current = stack.pop();
-  render();
-}
-
-render();
-</script>
-
-</body>
-</html>
