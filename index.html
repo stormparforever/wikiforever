@@ -10,6 +10,11 @@
       color: white;
       text-align: center;
       margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      margin: 20px 0;
     }
 
     .container {
@@ -30,33 +35,12 @@
       background: #333;
     }
 
-    .title {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
     .contentPage {
       text-align: left;
-      padding: 10px;
-    }
-
-    .scrollBox {
-      max-height: 300px;
-      overflow-y: auto;
-      background: #1a1a1a;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 15px;
       white-space: pre-wrap;
       word-break: break-word;
       line-height: 1.5;
-    }
-
-    .updateBox {
-      background: #2a2a2a;
-      border-left: 5px solid #4CAF50;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 8px;
     }
 
     button {
@@ -77,10 +61,6 @@
 <div class="container" id="content"></div>
 
 <script>
-
-// 🔔 update text (safe)
-const latestUpdate = "This site is still being built. More pages coming soon.";
-
 const data = {
   "TV Shows": {
     "Marvel": {
@@ -105,70 +85,22 @@ function render() {
   const container = document.getElementById("content");
   container.innerHTML = "";
 
-  try {
+  if (current.content) {
+    container.innerHTML = `
+      <div class="contentPage" id="textBox"></div>
+    `;
 
-    if (current.content) {
-      container.innerHTML = `
-        <div class="contentPage">
-
-          <div class="updateBox">
-            <strong>🔔 Author Update</strong>
-            <p>${latestUpdate}</p>
-          </div>
-
-          <h2>Info</h2>
-          <div class="scrollBox" id="textBox"></div>
-
-        </div>
-      `;
-
-      // SAFE TEXT RENDER (prevents crashes)
-      document.getElementById("textBox").innerText = current.content;
-
-      updatePath();
-      return;
-    }
-
-    Object.keys(current).forEach(key => {
-      let div = document.createElement("div");
-      div.className = "card";
-      div.innerText = key;
-
-      div.onclick = () => {
-        stack.push(current);
-        current = current[key];
-        render();
-      };
-
-      container.appendChild(div);
-    });
+    document.getElementById("textBox").innerText = current.content;
 
     updatePath();
-
-  } catch (e) {
-    container.innerHTML = "<p>Something broke. Check your text formatting.</p>";
-    console.error(e);
+    return;
   }
-}
 
-function updatePath() {
-  const pathDiv = document.getElementById("path");
+  Object.keys(current).forEach(key => {
+    let div = document.createElement("div");
+    div.className = "card";
+    div.innerText = key;
 
-  if (stack.length > 0) {
-    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
-  } else {
-    pathDiv.innerHTML = "";
-  }
-}
-
-function goBack() {
-  current = stack.pop();
-  render();
-}
-
-render();
-
-</script>
-
-</body>
-</html>
+    div.onclick = () => {
+      stack.push(current);
+      current
