@@ -34,7 +34,6 @@
       background: #333;
     }
 
-    /* 🔥 PINNED STYLE */
     .pinned {
       border-left: 5px solid #00bcd4;
       background: #1a1a1a;
@@ -72,7 +71,8 @@ const data = {
     "Marvel": {
       "Agents of Shield": {
 
-        "📌 Main Review": {
+        // 🔥 SAFE PINNED REVIEW (no emoji in key)
+        "Main Review": {
           content: `Agents of S.H.I.E.L.D. is a Marvel TV show that starts after Loki invaded Manhattan.
 
 The show follows a new S.H.I.E.L.D. team led by Phil Coulson.
@@ -82,7 +82,7 @@ Main members include Ward, Fitz, Simmons, May, and Skye.
 The show has strong early seasons and major twists like Hydra being revealed inside S.H.I.E.L.D.
 
 Opinion:
-The show is really good early on with strong characters and story.
+The show is really good early on.
 Later seasons can be hit or miss, but overall it's worth watching.`
         },
 
@@ -100,3 +100,122 @@ His memories were altered until he discovered the truth about Tahiti.`
             content: `Daisy Johnson (Skye) was part of the Rising Tide.
 
 She was captured by Ian Quinn (gravitonium guy), who experimented on her.
+
+She survived using the GH.325 formula.
+
+Raina ("the girl with the flower dress") is a separate character.
+
+She later becomes Quake after Terrigenesis.`
+          },
+
+          "Grant Ward": {
+            content: `Ward starts as S.H.I.E.L.D. but is revealed as Hydra.
+
+He was trained by John Garrett.
+
+He becomes one of the biggest betrayals in the show.`
+          },
+
+          "Leo Fitz": {
+            content: `Fitz is the team's engineer.
+
+Even after brain damage, he stays one of the smartest members.`
+          },
+
+          "Jemma Simmons": {
+            content: `Simmons is the science/medical expert.
+
+She goes through a lot and becomes one of the most developed characters.`
+          },
+
+          "Melinda May": {
+            content: `May is the team's best fighter.
+
+Known as "The Cavalry", she handles combat missions.`
+          }
+
+        }
+
+      }
+    },
+
+    "DC": {
+      "Flash": {
+        "2014 Edition": {
+          content: `Barry Allen is a speedster.
+
+He got powers from the particle accelerator explosion caused by Eobard Thawne.
+
+Don't watch past Season 4 — it gets bad.`
+        }
+      }
+    }
+  }
+};
+
+let current = data;
+let stack = [];
+
+function render() {
+  const container = document.getElementById("content");
+  container.innerHTML = "";
+
+  if (current.content) {
+    container.innerHTML = `<div class="contentPage" id="textBox"></div>`;
+    document.getElementById("textBox").innerText = current.content;
+    updatePath();
+    return;
+  }
+
+  // 🔥 FORCE Main Review to show first
+  let keys = Object.keys(current);
+
+  keys.sort((a, b) => {
+    if (a === "Main Review") return -1;
+    if (b === "Main Review") return 1;
+    return 0;
+  });
+
+  keys.forEach(key => {
+    let div = document.createElement("div");
+    div.className = "card";
+
+    if (key === "Main Review") {
+      div.classList.add("pinned");
+    }
+
+    div.innerText = key;
+
+    div.onclick = () => {
+      stack.push(current);
+      current = current[key];
+      render();
+    };
+
+    container.appendChild(div);
+  });
+
+  updatePath();
+}
+
+function updatePath() {
+  const pathDiv = document.getElementById("path");
+
+  if (stack.length > 0) {
+    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
+  } else {
+    pathDiv.innerHTML = "";
+  }
+}
+
+function goBack() {
+  current = stack.pop();
+  render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
