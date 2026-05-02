@@ -103,4 +103,33 @@ function render() {
 
     div.onclick = () => {
       stack.push(current);
-      current
+      current = current[key];
+      render();
+    };
+
+    container.appendChild(div);
+  });
+
+  updatePath();
+}
+
+function updatePath() {
+  const pathDiv = document.getElementById("path");
+
+  if (stack.length > 0) {
+    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
+  } else {
+    pathDiv.innerHTML = "";
+  }
+}
+
+function goBack() {
+  current = stack.pop();
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
