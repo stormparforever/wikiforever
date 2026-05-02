@@ -7,10 +7,10 @@
     html, body {
       margin: 0;
       padding: 0;
-      overflow-y: auto;
       font-family: Arial, sans-serif;
       background: #111;
       color: white;
+      height: 100%;
     }
 
     body {
@@ -54,7 +54,13 @@
       padding: 10px;
     }
 
-    .textBox {
+    /* 🔥 THE IMPORTANT PART */
+    .scrollBox {
+      max-height: 300px; /* you can change this later */
+      overflow-y: auto;
+      background: #1a1a1a;
+      padding: 10px;
+      border-radius: 8px;
       white-space: pre-wrap;
       word-break: break-word;
       line-height: 1.5;
@@ -145,15 +151,15 @@ function render() {
         </div>
 
         <h2>Info</h2>
-        <div class="textBox" id="textBox"></div>
+
+        <div class="scrollBox" id="scrollBox"></div>
 
       </div>
     `;
 
-    document.getElementById("textBox").innerText = current.content;
+    document.getElementById("scrollBox").innerText = current.content;
 
     updatePath();
-    window.scrollTo(0, 0);
     return;
   }
 
@@ -165,3 +171,24 @@ function render() {
       <div class="title">${key}</div>
       <div class="subtitle">Click to open</div>
     `;
+
+    div.onclick = () => {
+      stack.push(current);
+      current = current[key];
+      render();
+    };
+
+    container.appendChild(div);
+  });
+
+  updatePath();
+}
+
+function updatePath() {
+  const pathDiv = document.getElementById("path");
+
+  if (stack.length > 0) {
+    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
+  } else {
+    pathDiv.innerHTML = "";
+  }
