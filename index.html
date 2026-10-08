@@ -67,8 +67,15 @@
 <script>
 
 const data = {
+
+  /* =========================
+     TV SHOWS
+     ========================= */
+
   "TV Shows": {
+
     "Marvel": {
+
       "Agents of Shield": {
 
         "Main Review": {
@@ -138,11 +145,13 @@ Known as "The Cavalry", she handles combat missions and is highly trusted.`
         }
 
       }
+
     },
 
     "DC": {
 
       "Flash": {
+
         "2014 Edition": {
 
           "Main Review": {
@@ -152,173 +161,4 @@ Barry Allen (The Flash) is a speedster who saves people and stops villains.
 
 He got his powers years after the death of his mom because of Eobard Thawne (disguised as Dr. Wells). It is later revealed Thawne killed his mother after failing to kill Barry.
 
-Anyway, the particle accelerator exploded and created metahumans—and the Flash.
-
-Don't watch past Season 4. It gets bad. By Season 7 it's just stupid. The ending is... eh.`
-          },
-
-          "Characters": {
-
-            "Barry Allen": {
-              content: `Barry Allen is The Flash.
-
-He gains super speed from the particle accelerator explosion.
-
-His main goal is solving his mother's murder and stopping Eobard Thawne.
-
-He always tries to save everyone, even when it causes problems.`
-            },
-
-            "Wally West": {
-              content: `Wally West becomes a speedster later in the show.
-
-He is more emotional and impulsive than Barry.
-
-He struggles at first but eventually becomes a hero on his own.`
-            },
-
-            "Eobard Thawne": {
-              content: `Eobard Thawne (Reverse-Flash) is the main villain.
-
-He pretends to be Harrison Wells while secretly controlling everything.
-
-He killed Barry's mother and caused most of the timeline problems.`
-            },
-
-            "Cisco Ramon": {
-              content: `Cisco Ramon is the team's tech expert and comic relief.
-
-He names villains and builds tech.
-
-Later, he becomes Vibe.`
-            },
-
-            "Caitlin Snow": {
-              content: `Caitlin Snow is the team's scientist and doctor.
-
-She goes through a lot, including Ronnie and becoming Killer Frost.
-
-Her story becomes more complex over time.`
-            },
-
-            "Firestorm / Ronnie Raymond": {
-              content: `Ronnie Raymond was thought dead after the explosion.
-
-He returns as part of Firestorm with Dr. Stein.
-
-His story is emotional and tied to Caitlin.`
-            }
-
-          }
-
-        }
-      },
-
-      "Green Lantern": {
-
-        "Main Review": {
-          content: `Green Lantern is okay.
-
-I fell asleep during it about 2 or 3 times.
-
-There are a few funny scenes, but honestly the movie is quite boring to me.
-
-It has some cool moments and the Green Lantern idea is interesting, but it just didn't keep me interested for most of the movie.`
-        },
-
-        "Characters": {
-
-          "Hal Jordan / Green Lantern": {
-            content: `Hal Jordan is a test pilot who becomes the Green Lantern of Sector 2814.
-
-After Abin Sur is mortally wounded, his power ring chooses Hal and takes him to Oa, where he learns about the Green Lantern Corps.
-
-Hal is confident, reckless, and sometimes acts before thinking.
-
-He has to overcome his fear and learn what it means to be a Green Lantern.
-
-He uses the ring to create energy constructs, fly, and fight enemies.
-
-In the movie, Hal's biggest enemy is Parallax, a being powered by fear.`
-          }
-
-        }
-
-      }
-
-    }
-  }
-};
-
-let current = data;
-let stack = [];
-
-function render() {
-  const container = document.getElementById("content");
-  container.innerHTML = "";
-
-  if (!current || typeof current !== "object") {
-    container.innerHTML = "<p>Error loading content.</p>";
-    return;
-  }
-
-  if (current.content) {
-    container.innerHTML = `<div class="contentPage" id="textBox"></div>`;
-    document.getElementById("textBox").innerText = current.content;
-    updatePath();
-    return;
-  }
-
-  let keys = Object.keys(current);
-
-  keys.sort((a, b) => {
-    if (a === "Main Review" && b !== "Main Review") return -1;
-    if (b === "Main Review" && a !== "Main Review") return 1;
-    return a.localeCompare(b);
-  });
-
-  keys.forEach(key => {
-    let div = document.createElement("div");
-    div.className = "card";
-
-    if (key === "Main Review") {
-      div.classList.add("pinned");
-    }
-
-    div.innerText = key;
-
-    div.onclick = () => {
-      stack.push(current);
-      current = current[key];
-      render();
-    };
-
-    container.appendChild(div);
-  });
-
-  updatePath();
-}
-
-function updatePath() {
-  const pathDiv = document.getElementById("path");
-
-  if (stack.length > 0) {
-    pathDiv.innerHTML = `<button onclick="goBack()">⬅ Back</button>`;
-  } else {
-    pathDiv.innerHTML = "";
-  }
-}
-
-function goBack() {
-  if (stack.length > 0) {
-    current = stack.pop();
-    render();
-  }
-}
-
-render();
-
-</script>
-
-</body>
-</html>
+Anyway, the particle accelerator exploded and created metahumans—and the
